@@ -34,7 +34,7 @@ Este repositorio documenta la **arquitectura objetivo** del marketplace de deliv
 │   ├── diagrams/
 │   │   ├── c4_context.mmd             # C4 nivel 1
 │   │   └── c4_container.mmd           # C4 nivel 2
-│   └── skills/                        # Skills auxiliares para reproducir el trabajo
+│   └── skills/                        # Skills de verificación (verify-artifact, traceability-check)
 └── prompts_mejorados/
     ├── prd_mejorado.md                # Mejora del B.1
     └── adr_mejorado.md                # Mejora del B.3
@@ -88,6 +88,17 @@ Evidencia por corrida en cada archivo de `prompts_mejorados/<nombre>.md` § Mét
 2. Leer artefactos en orden: BRD → MRD → PRD → FSD → ADRs → diagramas C4.
 3. Para regenerar un artefacto: invocar el prompt correspondiente de `prompts_mejorados/` con los inputs declarados en su sección **Context**.
 4. Render de diagramas: cualquier visor Mermaid con soporte C4 (Mermaid ≥ 10.0).
+5. Antes de cada commit aplicar las skills de verificación:
+   - [`docs/skills/verify-artifact.md`](docs/skills/verify-artifact.md) — checklist por tipo de artefacto.
+   - [`docs/skills/traceability-check.md`](docs/skills/traceability-check.md) — verificación de trazabilidad explícita Brief → PRD → FSD → ADRs → C4.
+
+## 6.1 Atajos de navegación
+
+- [BRD](docs/brd/BRD.md) · [MRD](docs/mrd/MRD.md) · [PRD](docs/prd/PRD.md) · [FSD](docs/fsd/FSD.md)
+- [ADR 0001 — Estilo arquitectónico](docs/adr/0001-estilo-arquitectonico.md)
+- [ADR 0002 — Mecanismo IPC](docs/adr/0002-mecanismo-ipc.md)
+- [C4 Context](docs/diagrams/c4_context.mmd) · [C4 Container](docs/diagrams/c4_container.mmd)
+- [Prompt mejorado PRD](prompts_mejorados/prd_mejorado.md) · [Prompt mejorado ADR](prompts_mejorados/adr_mejorado.md)
 
 ## 7. Self-check de entrega
 
