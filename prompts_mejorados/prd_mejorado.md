@@ -17,16 +17,16 @@ Eres un **arquitecto de software senior** con 10+ años en plataformas de market
 
 ## Task
 
-Genera un **PRD ligero** para FTGO en Markdown, partiendo del brief del Anexo A del examen. El PRD debe tener entre 2 y 4 páginas equivalentes y servir como **entrada directa** para un FSD (≥ 5 UCs con Given/When/Then) y para 2 ADRs arquitectónicos.
+Genera un **PRD ligero** para FTGO en Markdown, partiendo del [Brief FTGO](../docs/brief/brief.md). El PRD debe tener entre 2 y 4 páginas equivalentes y servir como **entrada directa** para un FSD (≥ 5 UCs con Given/When/Then) y para 2 ADRs arquitectónicos.
 
 ## Context
 
-- **Documento fuente principal**: el brief del Anexo A (contexto, stakeholders, capacidades, NFRs base, US semilla).
+- **Documento fuente principal**: el [Brief FTGO](../docs/brief/brief.md) (contexto, stakeholders, capacidades, NFRs base, US semilla).
 - **Documento fuente secundario**: PDF *Microservices Patterns* (caps 1–2 obligatorios).
 
 ### Stakeholders del brief (TODO 1 rellenado)
 
-Lista canónica del [Brief §A.2](../examen.md). El modelo **no** debe rederivarlos:
+Lista canónica del [Brief §A.2](../docs/brief/brief.md). El modelo **no** debe rederivarlos:
 
 1. **Consumidor** — usuario final que ordena comida vía app móvil o web. Interés: UX rápida y tracking en tiempo real.
 2. **Restaurante** — negocio asociado que prepara la comida. Interés: gestión de tickets, control de carga de cocina.
@@ -37,7 +37,7 @@ Lista canónica del [Brief §A.2](../examen.md). El modelo **no** debe rederivar
 
 ### Capacidades de negocio (TODO 2 rellenado)
 
-Las **7 capacidades** del [Brief §A.3](../examen.md), cap 2 de Richardson:
+Las **7 capacidades** del [Brief §A.3](../docs/brief/brief.md), cap 2 de Richardson:
 
 1. **Consumer Management** — registro, perfiles, direcciones, preferencias.
 2. **Restaurant Management** — restaurantes, menús, horarios.
@@ -50,7 +50,7 @@ Las **7 capacidades** del [Brief §A.3](../examen.md), cap 2 de Richardson:
 ### Restricciones de dominio
 
 - **No inventar** stakeholders, capacidades o NFRs fuera del brief.
-- Cada NFR del PRD **debe** rastrearse a una entrada de [Brief §A.4](../examen.md) en formato `[Brief §A.4 <campo>]`.
+- Cada NFR del PRD **debe** rastrearse a una entrada de [Brief §A.4](../docs/brief/brief.md) en formato `[Brief §A.4 <campo>]`.
 - PRD **ligero**: no exhaustivo; cubre lo esencial para que FSD y ADRs se deriven.
 
 ## Reasoning
@@ -184,7 +184,7 @@ Si algún ítem falla, **no entregar**: corregir y re-verificar.
 
 ### Setup
 
-- Brief: Anexo A del examen.
+- Brief: [`docs/brief/brief.md`](../docs/brief/brief.md).
 - Modelo: Claude Sonnet 4.6 (temperatura 0.2).
 - Cada corrida = 1 prompt → 1 PRD.
 - Verificación: checklist de la sección Verification.
@@ -225,7 +225,7 @@ El **driver principal** del salto fue el TODO 4 (esqueleto por sección con mini
 Documentado en el README raíz; uso típico desde un cliente de Claude:
 
 ```text
-@prompts_mejorados/prd_mejorado.md genera PRD para FTGO partiendo del brief del Anexo A
+@prompts_mejorados/prd_mejorado.md genera PRD para FTGO partiendo de docs/brief/brief.md
 ```
 
 Parámetros opcionales: `--max-words=1800`, `--lang=es`.

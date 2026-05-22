@@ -3,13 +3,13 @@
 **Status**: Accepted
 **Fecha**: 22 mayo 2026
 **Autor**: David — Equipo de Arquitectura
-**Insumos**: [PRD](../prd/PRD.md), [FSD](../fsd/FSD.md), [Brief Anexo A](../../examen.md), Richardson 2019 caps 1–2.
+**Insumos**: [PRD](../prd/PRD.md), [FSD](../fsd/FSD.md), [Brief FTGO](../brief/brief.md), Richardson 2019 caps 1–2.
 
 ---
 
 ## 1. Contexto
 
-FTGO opera un **monolito Java/WAR** con los síntomas del *infierno monolítico* descritos por Richardson (cap 1): builds lentos, despliegues frágiles, escalado conflictivo y falta de aislamiento de fallos. La dirección decidió migrar a microservicios con **Strangler Fig** durante 18–24 meses ([Brief §A.4](../../examen.md)).
+FTGO opera un **monolito Java/WAR** con los síntomas del *infierno monolítico* descritos por Richardson (cap 1): builds lentos, despliegues frágiles, escalado conflictivo y falta de aislamiento de fallos. La dirección decidió migrar a microservicios con **Strangler Fig** durante 18–24 meses ([Brief §A.4](../brief/brief.md)).
 
 Antes de decidir IPC, persistencia o coreografía, hay que fijar el **estilo arquitectónico** global: ¿quedarse como monolito modular, migrar a un mid-point (modular/cellular), descomponer por capacidades de negocio, o por subdominios DDD? La decisión condiciona los 6 UCs del FSD, la granularidad operativa y el coste de la migración.
 
@@ -138,7 +138,7 @@ Se elige la **Opción 3 — Microservicios por business capability** alineada co
 **Justificación resumida**
 
 - Es la única opción que cubre simultáneamente R-01 (5x pico), R-02 (99.9 %) y R-03 (latencia) sin caer en anti-patrones del cap 2.
-- Las 7 capacidades del [Brief §A.3](../../examen.md) son estables a largo plazo, lo que minimiza el riesgo de tener que rediseñar los límites en 12 meses.
+- Las 7 capacidades del [Brief §A.3](../brief/brief.md) son estables a largo plazo, lo que minimiza el riesgo de tener que rediseñar los límites en 12 meses.
 - Habilita migración incremental: el orden propuesto es Notifications → Billing → Delivery tracking → Order Taking → Kitchen → Consumer/Restaurant Mgmt, de menor a mayor riesgo de cambio.
 - La granularidad por subdominio (Opción 4) queda como refinamiento posterior si la evidencia operativa lo justifica.
 
@@ -171,4 +171,4 @@ Se elige la **Opción 3 — Microservicios por business capability** alineada co
 
 - Richardson, C. (2019). *Microservices Patterns*. Manning. Cap 1 (*From Hell* + Scale Cube), Cap 2 (*Decompose by Business Capability* + anti-patrones), Cap 13 (Strangler Fig).
 - [PRD](../prd/PRD.md), [FSD](../fsd/FSD.md), [BRD](../brd/BRD.md), [MRD](../mrd/MRD.md).
-- [Brief Anexo A](../../examen.md).
+- [Brief FTGO](../brief/brief.md).

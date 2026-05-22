@@ -5,7 +5,7 @@
 **Autor**: David — Equipo de Arquitectura
 **Fecha**: 22 mayo 2026
 **Estado**: Aprobado para derivar FSD y ADRs
-**Fuentes**: [BRD](../brd/BRD.md), [MRD](../mrd/MRD.md), [Anexo A del examen](../../examen.md), Richardson 2019 (caps 1–2).
+**Fuentes**: [BRD](../brd/BRD.md), [MRD](../mrd/MRD.md), [Brief FTGO](../brief/brief.md), Richardson 2019 (caps 1–2).
 
 > PRD **ligero** (2–4 páginas equivalentes) en línea con la consigna. Cubre 5 secciones obligatorias: contexto, stakeholders, capacidades de negocio, NFRs y alcance. Cada NFR cita su origen en el brief.
 
@@ -15,13 +15,13 @@
 
 FTGO es una plataforma operativa de delivery de comida que conecta consumidores, restaurantes y couriers. El producto vive hoy en un **monolito Java/WAR** con los síntomas clásicos del *infierno monolítico* descritos por Richardson (cap 1): builds lentos, despliegues riesgosos, escalado conflictivo y falta de aislamiento de fallos.
 
-La dirección decidió migrar a **microservicios** mediante **Strangler Fig** durante 18–24 meses ([Brief §A.4 Migración incremental](../../examen.md)). Este PRD documenta los **requisitos de producto** que la nueva arquitectura debe satisfacer: capacidades, NFRs medibles y alcance de la primera versión migrada. Es el insumo directo del [FSD](../fsd/FSD.md) y de los dos [ADRs](../adr/) arquitectónicos.
+La dirección decidió migrar a **microservicios** mediante **Strangler Fig** durante 18–24 meses ([Brief §A.4 Migración incremental](../brief/brief.md)). Este PRD documenta los **requisitos de producto** que la nueva arquitectura debe satisfacer: capacidades, NFRs medibles y alcance de la primera versión migrada. Es el insumo directo del [FSD](../fsd/FSD.md) y de los dos [ADRs](../adr/) arquitectónicos.
 
 **Objetivo del producto**: sostener el crecimiento operacional sin degradar la UX del consumidor ni la confiabilidad operativa del restaurante y del courier, habilitando equipos independientes de desarrollo y despliegue (objetivos del [BRD](../brd/BRD.md) BG-01..BG-05).
 
 ## 2. Stakeholders
 
-Lista canónica del [Brief §A.2](../../examen.md). No se inventan stakeholders fuera de esta lista.
+Lista canónica del [Brief §A.2](../brief/brief.md). No se inventan stakeholders fuera de esta lista.
 
 | ID | Rol | Necesidad principal | Origen |
 |---|---|---|---|
@@ -34,7 +34,7 @@ Lista canónica del [Brief §A.2](../../examen.md). No se inventan stakeholders 
 
 ## 3. Capacidades de negocio
 
-Las **7 capacidades** del [Brief §A.3](../../examen.md), alineadas con el cap 2 de Richardson (*Decompose by Business Capability*). Estas capacidades son **candidatas** a microservicios; la granularidad final se decide en [ADR 0001](../adr/0001-estilo-arquitectonico.md).
+Las **7 capacidades** del [Brief §A.3](../brief/brief.md), alineadas con el cap 2 de Richardson (*Decompose by Business Capability*). Estas capacidades son **candidatas** a microservicios; la granularidad final se decide en [ADR 0001](../adr/0001-estilo-arquitectonico.md).
 
 1. **Consumer Management** — Registro, perfiles, direcciones, preferencias del consumidor. Es la capacidad que sostiene el ciclo de vida del usuario final y habilita personalización y cumplimiento GDPR.
 2. **Restaurant Management** — Restaurantes registrados, menús, horarios, disponibilidad. Cambios de menú deben propagarse a las apps sin downtime.
@@ -51,49 +51,49 @@ Las **7 capacidades** del [Brief §A.3](../../examen.md), alineadas con el cap 2
 ### NFR-01 — Latencia UX
 
 - **Métrica**: ≤ 200 ms p95 en acciones del consumidor en la app (listar menú, ver carrito, confirmar pedido).
-- **Origen**: [Brief §A.4 Latencia UX](../../examen.md).
+- **Origen**: [Brief §A.4 Latencia UX](../brief/brief.md).
 - **Justificación**: experiencia móvil en horarios pico; abandono de carrito crece con latencia (MM-01 del MRD).
 
 ### NFR-02 — Disponibilidad
 
 - **Métrica**: ≥ 99.9 % mensual en el flujo de toma de pedidos (UC-01, UC-04). Tracking en tiempo real (UC-05) puede degradar hasta 99.5 %.
-- **Origen**: [Brief §A.4 Disponibilidad](../../examen.md).
+- **Origen**: [Brief §A.4 Disponibilidad](../brief/brief.md).
 - **Justificación**: cada minuto de outage en horario pico tiene impacto directo en ingresos (BRD BG-02).
 
 ### NFR-03 — Escalabilidad horizontal independiente
 
 - **Métrica**: el sistema debe soportar **5x** del tráfico base en horarios pico (12–14 h y 19–22 h), escalando cada capacidad de forma independiente (Y-axis del Scale Cube de Richardson cap 1) sin necesidad de escalar las 7 capacidades juntas.
-- **Origen**: [Brief §A.4 Carga + Escalabilidad horizontal](../../examen.md).
+- **Origen**: [Brief §A.4 Carga + Escalabilidad horizontal](../brief/brief.md).
 - **Justificación**: el monolito hoy escala todo o nada y desperdicia recursos.
 
 ### NFR-04 — Tolerancia a fallos de sistemas externos
 
 - **Métrica**: el sistema **debe** seguir aceptando pedidos cuando la pasarela de pago (Stripe) está caída, encolando reintentos hasta 60 min. Puede degradar mapas a respuestas en caché por hasta 30 min.
-- **Origen**: [Brief §A.4 Tolerancia a fallos externos](../../examen.md).
+- **Origen**: [Brief §A.4 Tolerancia a fallos externos](../brief/brief.md).
 - **Justificación**: brief explícito + cap 4–5 Richardson (Saga / outbox / circuit breaker).
 
 ### NFR-05 — Cumplimiento (PCI-DSS + GDPR)
 
 - **Métrica**: 0 datos de tarjeta persistidos en la plataforma; 100 % del tratamiento de pago delegado a Stripe. Datos personales del consumidor segregados en Consumer Service con retención y consentimiento auditables.
-- **Origen**: [Brief §A.4 Cumplimiento](../../examen.md).
+- **Origen**: [Brief §A.4 Cumplimiento](../brief/brief.md).
 - **Justificación**: requisito legal y restricción de auditoría del BRD (BG-05).
 
 ### NFR-06 — Consistencia de datos
 
 - **Métrica**: consistencia **fuerte dentro del aggregate de un pedido**; eventual entre servicios para reporting. Ventana de eventual consistency ≤ 2 s p95 entre Order, Delivery y Billing.
-- **Origen**: [Brief §A.4 Consistencia de datos](../../examen.md).
+- **Origen**: [Brief §A.4 Consistencia de datos](../brief/brief.md).
 - **Justificación**: cap 5–6 Richardson (DB-per-service + Saga).
 
 ### NFR-07 — Trazabilidad
 
 - **Métrica**: 100 % de las acciones del consumidor portan `correlation-id` propagado end-to-end; tracing distribuido cubriendo todos los servicios y BDs.
-- **Origen**: [Brief §A.4 Trazabilidad](../../examen.md).
+- **Origen**: [Brief §A.4 Trazabilidad](../brief/brief.md).
 - **Justificación**: imprescindible en arquitectura distribuida para soporte (SH-04) y operaciones (cap 11 Richardson).
 
 ### NFR-08 — Stack tecnológico del core
 
 - **Métrica**: ≥ 80 % de los servicios core escritos en Java/Spring Boot; libertad tecnológica permitida en servicios satélite (notifications, dashboards internos).
-- **Origen**: [Brief §A.4 Tecnología](../../examen.md).
+- **Origen**: [Brief §A.4 Tecnología](../brief/brief.md).
 - **Justificación**: reutilización del expertise existente del equipo y reducción del riesgo de migración.
 
 ## 5. Alcance
@@ -108,7 +108,7 @@ Las **7 capacidades** del [Brief §A.3](../../examen.md), alineadas con el cap 2
 
 ### 5.2 Fuera de alcance
 
-- **Big-bang rewrite** del monolito (explícitamente vetado por [Brief §A.4 Migración incremental](../../examen.md)).
+- **Big-bang rewrite** del monolito (explícitamente vetado por [Brief §A.4 Migración incremental](../brief/brief.md)).
 - Construcción de un *Backend for Frontend* específico para web admin más allá del gateway compartido.
 - Service Mesh completo (Istio/Linkerd): se difiere a un ADR posterior si la operación lo justifica.
 - Expansión geográfica y nuevos verticales (cubierto en futuras versiones del MRD).
@@ -137,6 +137,6 @@ Las **7 capacidades** del [Brief §A.3](../../examen.md), alineadas con el cap 2
 ## 7. Anexos y referencias
 
 - Richardson, C. (2019). *Microservices Patterns*. Manning. Capítulos 1–2 (obligatorios), 4–6, 11 (referenciados).
-- [Brief FTGO (Anexo A)](../../examen.md).
+- [Brief FTGO](../brief/brief.md).
 - Repositorio canónico: <https://github.com/microservices-patterns/ftgo-application>.
 - [BRD](../brd/BRD.md) y [MRD](../mrd/MRD.md) como upstream del producto.

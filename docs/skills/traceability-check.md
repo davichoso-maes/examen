@@ -2,12 +2,12 @@
 
 ## Propósito
 
-Verificar la **trazabilidad explícita** entre artefactos (Brief → BRD/MRD → PRD → FSD → ADR → C4). Es la regla más fuerte de la rúbrica: cada decisión arquitectónica debe poder rastrearse a (a) un capítulo del libro Richardson, (b) una restricción del [Brief Anexo A](../../examen.md) o (c) una user story semilla.
+Verificar la **trazabilidad explícita** entre artefactos (Brief → BRD/MRD → PRD → FSD → ADR → C4). Es la regla más fuerte de la rúbrica: cada decisión arquitectónica debe poder rastrearse a (a) un capítulo del libro Richardson, (b) una restricción del [Brief FTGO](../brief/brief.md) o (c) una user story semilla.
 
 ## Inputs
 
 - Todos los artefactos del repo (`docs/**/*.md`, `docs/diagrams/*.mmd`).
-- Brief (`examen.md`).
+- Brief ([`docs/brief/brief.md`](../brief/brief.md)).
 
 ## Reglas de trazabilidad
 
@@ -75,6 +75,6 @@ Si alguna fila reporta ✗, **no hacer commit** y agregar la cita faltante.
 
 ## Referencias
 
-- [Brief Anexo A](../../examen.md).
+- [Brief FTGO](../brief/brief.md).
 - Rúbrica del examen — "Trazabilidad obligatoria".
 - Richardson, C. (2019). *Microservices Patterns*. Manning. Caps 1–6, 11, 13.

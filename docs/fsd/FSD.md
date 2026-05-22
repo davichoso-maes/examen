@@ -5,7 +5,7 @@
 **Autor**: David — Análisis funcional
 **Fecha**: 22 mayo 2026
 **Estado**: Aprobado para alimentar ADRs y diagramas C4
-**Insumos**: [PRD](../prd/PRD.md), [Brief Anexo A](../../examen.md) (US-01..03), Richardson 2019 caps 3–5.
+**Insumos**: [PRD](../prd/PRD.md), [Brief FTGO](../brief/brief.md) (US-01..03), Richardson 2019 caps 3–5.
 
 > FSD **ligero**: ≥ 5 Casos de Uso con Given/When/Then explícito y trazabilidad obligatoria a (a) una US semilla del brief, (b) una capacidad del PRD o (c) un capítulo del libro.
 
@@ -13,7 +13,7 @@
 
 ## 1. Introducción
 
-Este FSD formaliza los casos de uso (UCs) que la arquitectura objetivo de FTGO debe soportar para satisfacer el [PRD](../prd/PRD.md) y las 3 user stories semilla del [Brief §A.5](../../examen.md). Cubre el ciclo crítico del marketplace: toma de pedido → pago → asignación de courier → tracking, más una capacidad transversal (cancelación) derivada del cap 4 de Richardson y del PRD.
+Este FSD formaliza los casos de uso (UCs) que la arquitectura objetivo de FTGO debe soportar para satisfacer el [PRD](../prd/PRD.md) y las 3 user stories semilla del [Brief §A.5](../brief/brief.md). Cubre el ciclo crítico del marketplace: toma de pedido → pago → asignación de courier → tracking, más una capacidad transversal (cancelación) derivada del cap 4 de Richardson y del PRD.
 
 **Alcance funcional**: 6 UCs (UC-01..UC-06). El alcance excluye explícitamente flujos administrativos (gestión de menús, alta de restaurante, payouts internos), que se documentarán en una segunda iteración del FSD.
 
@@ -307,4 +307,4 @@ Cobertura faltante (deferida): **Consumer Management**, **Restaurant Management*
 
 - [PRD](../prd/PRD.md), [MRD](../mrd/MRD.md), [BRD](../brd/BRD.md).
 - Richardson, C. (2019). *Microservices Patterns*. Manning. Cap 3 (IPC), Cap 4 (Saga), Cap 5 (Business Logic), Cap 11 (Observability).
-- [Brief Anexo A](../../examen.md) §A.5 (US-01..03).
+- [Brief FTGO](../brief/brief.md) §A.5 (US-01..03).

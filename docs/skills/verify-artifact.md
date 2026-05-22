@@ -7,7 +7,7 @@ Verificar que un artefacto del repo (PRD, FSD, ADR, C4) cumple la rúbrica del e
 ## Inputs
 
 - Ruta del artefacto (`docs/prd/PRD.md`, `docs/fsd/FSD.md`, `docs/adr/NNNN-*.md`, `docs/diagrams/c4_*.mmd`).
-- Brief (`examen.md`) como referencia de origen.
+- Brief ([`docs/brief/brief.md`](../brief/brief.md)) como referencia de origen.
 
 ## Checklist por tipo de artefacto
 
@@ -62,5 +62,5 @@ Si algún ítem falla, **no hacer commit**: corregir el artefacto y re-verificar
 
 ## Referencias
 
-- Rúbrica del examen (`examen.md`, sección "Rúbrica").
+- Rúbrica del examen (entregada por la institución; resumen disponible al revisor en `ref/`).
 - Invariants declarados en cada artefacto.

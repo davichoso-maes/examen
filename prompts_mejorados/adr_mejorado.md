@@ -17,7 +17,7 @@ Eres un **arquitecto principal** con experiencia en migraciones de monolito a mi
 
 ## Task
 
-A partir de `docs/prd/PRD.md` + `docs/fsd/FSD.md` ya generados y del brief de FTGO (Anexo A), produce **1 ADR** en Markdown sobre una decisión arquitectónica clave del caso. La decisión específica se pasa como parámetro:
+A partir de `docs/prd/PRD.md` + `docs/fsd/FSD.md` ya generados y del [Brief FTGO](../docs/brief/brief.md), produce **1 ADR** en Markdown sobre una decisión arquitectónica clave del caso. La decisión específica se pasa como parámetro:
 
 ```text
 decision = "estilo arquitectónico" | "mecanismo IPC" | "estrategia de datos" | "descomposición"
@@ -26,7 +26,7 @@ decision = "estilo arquitectónico" | "mecanismo IPC" | "estrategia de datos" | 
 ## Context
 
 - **Documentos fuente** (en orden de precedencia):
-  1. [Brief Anexo A](../examen.md) — única fuente del dominio.
+  1. [Brief FTGO](../docs/brief/brief.md) — única fuente del dominio.
   2. [`docs/prd/PRD.md`](../docs/prd/PRD.md) — NFRs y capacidades.
   3. [`docs/fsd/FSD.md`](../docs/fsd/FSD.md) — UCs derivados.
   4. PDF *Microservices Patterns* — capítulos según la decisión.
@@ -165,7 +165,7 @@ Cada opción debe seguir **exactamente** esta estructura:
 
 ```text
 Genera un ADR sobre "mecanismo IPC predominante" para FTGO.
-Inputs: docs/prd/PRD.md, docs/fsd/FSD.md, brief Anexo A.
+Inputs: docs/prd/PRD.md, docs/fsd/FSD.md, docs/brief/brief.md.
 ```
 
 ### Ejemplo output (extracto válido — primeras 2 opciones de la decisión IPC)

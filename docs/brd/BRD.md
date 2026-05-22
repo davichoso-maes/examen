@@ -101,5 +101,5 @@ Este documento se considera completo y útil cuando:
 ## 10. Referencias
 
 - Richardson, C. (2019). *Microservices Patterns*. Manning. Capítulos 1–2.
-- Anexo A del examen (brief FTGO), §A.1–A.4.
+- [Brief FTGO](../brief/brief.md), §A.1–A.4.
 - Repositorio canónico: <https://github.com/microservices-patterns/ftgo-application>.

@@ -6,7 +6,7 @@
 **Fecha**: 21 mayo 2026
 **Estado**: Aprobado para alimentar el PRD
 
-> Documento centrado en el **mercado y los usuarios**: qué necesidades existen, qué expectativas tiene cada actor del marketplace y qué requisitos de mercado deben traducirse luego en producto (PRD) y función (FSD). Hereda los objetivos del [BRD](../brd/BRD.md) y se restringe al brief del [Anexo A](../../examen.md).
+> Documento centrado en el **mercado y los usuarios**: qué necesidades existen, qué expectativas tiene cada actor del marketplace y qué requisitos de mercado deben traducirse luego en producto (PRD) y función (FSD). Hereda los objetivos del [BRD](../brd/BRD.md) y se restringe al [Brief FTGO](../brief/brief.md).
 
 ---
 
@@ -16,7 +16,7 @@ FTGO es un **marketplace de tres lados** (consumidor ↔ restaurante ↔ courier
 
 ## 2. Segmentos de usuarios y necesidades
 
-Las necesidades se derivan estrictamente de los stakeholders declarados en el [Brief §A.2](../../examen.md) y se ordenan por prioridad para producto.
+Las necesidades se derivan estrictamente de los stakeholders declarados en el [Brief §A.2](../brief/brief.md) y se ordenan por prioridad para producto.
 
 ### 2.1 Consumidor (lado demanda)
 
@@ -109,5 +109,5 @@ Estos son los flujos críticos por los que el mercado valora a FTGO. Cada uno at
 ## 9. Referencias
 
 - [BRD](../brd/BRD.md) (objetivos de negocio y restricciones)
-- [Anexo A del examen](../../examen.md) (única fuente del dominio)
+- [Brief FTGO](../brief/brief.md) (única fuente del dominio)
 - Richardson, C. (2019). *Microservices Patterns*. Manning. Capítulos 1–2.

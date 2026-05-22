@@ -11,15 +11,15 @@ Este repositorio documenta la **arquitectura objetivo** del marketplace de deliv
 - **BRD / MRD / PRD / FSD**: trazabilidad de negocio → mercado → producto → función.
 - **ADRs**: decisiones arquitectónicas con opciones, trade-offs y consecuencias.
 - **Diagramas C4**: Context (nivel 1) y Container (nivel 2) en Mermaid.
-- **Prompts mejorados**: 2 de los 4 prompts semilla del Anexo B con cambios documentados, métricas y comandos invocables.
+- **Prompts mejorados**: 2 de los 4 prompts semilla (PRD y ADR) con cambios documentados, métricas y comandos invocables. Las versiones semilla originales se conservan en `prompts_semilla/`.
 
 ## 2. Estructura del repositorio
 
 ```
 .
 ├── README.md                          # Este archivo
-├── examen.md                          # Consigna y anexos (A y B)
 ├── docs/
+│   ├── brief/brief.md                 # Brief FTGO (única fuente del dominio)
 │   ├── brd/BRD.md                     # Business Requirements Document
 │   ├── mrd/MRD.md                     # Market Requirements Document
 │   ├── prd/PRD.md                     # Product Requirements Document
@@ -31,15 +31,20 @@ Este repositorio documenta la **arquitectura objetivo** del marketplace de deliv
 │   │   ├── c4_context.mmd             # C4 nivel 1
 │   │   └── c4_container.mmd           # C4 nivel 2
 │   └── skills/                        # Skills de verificación (verify-artifact, traceability-check)
+├── prompts_semilla/                   # Prompts semilla originales (v0.1-seed, con TODOs)
+│   ├── prd_semilla.md
+│   ├── fsd_semilla.md
+│   ├── adr_semilla.md
+│   └── c4_semilla.md
 └── prompts_mejorados/
-    ├── prd_mejorado.md                # Mejora del B.1
-    └── adr_mejorado.md                # Mejora del B.3
+    ├── prd_mejorado.md                # Mejora del prompt PRD semilla
+    └── adr_mejorado.md                # Mejora del prompt ADR semilla
 ```
 
 ## 3. Mapa de trazabilidad
 
 ```
-Brief FTGO (Anexo A)
+Brief FTGO (docs/brief/brief.md)
         │
         ▼
    BRD → MRD → PRD ──► NFRs
@@ -80,7 +85,7 @@ Evidencia por corrida en cada archivo de `prompts_mejorados/<nombre>.md` § Mét
 
 ## 6. Cómo reproducir
 
-1. Leer `examen.md` (Anexos A y B son la única fuente del dominio).
+1. Leer el [Brief FTGO](docs/brief/brief.md) (única fuente del dominio) y los prompts semilla en `prompts_semilla/`.
 2. Leer artefactos en orden: BRD → MRD → PRD → FSD → ADRs → diagramas C4.
 3. Para regenerar un artefacto: invocar el prompt correspondiente de `prompts_mejorados/` con los inputs declarados en su sección **Context**.
 4. Render de diagramas: cualquier visor Mermaid con soporte C4 (Mermaid ≥ 10.0).
@@ -90,6 +95,7 @@ Evidencia por corrida en cada archivo de `prompts_mejorados/<nombre>.md` § Mét
 
 ## 6.1 Atajos de navegación
 
+- [Brief FTGO](docs/brief/brief.md)
 - [BRD](docs/brd/BRD.md) · [MRD](docs/mrd/MRD.md) · [PRD](docs/prd/PRD.md) · [FSD](docs/fsd/FSD.md)
 - [ADR 0001 — Estilo arquitectónico](docs/adr/0001-estilo-arquitectonico.md)
 - [ADR 0002 — Mecanismo IPC](docs/adr/0002-mecanismo-ipc.md)

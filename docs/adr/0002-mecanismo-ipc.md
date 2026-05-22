@@ -175,4 +175,4 @@ Se elige la **Opción 3 — IPC híbrido: REST/JSON síncrono para el plano del 
 
 - Richardson, C. (2019). *Microservices Patterns*. Manning. Cap 3 (IPC), Cap 4 (Saga), Cap 5 (Domain events + Outbox), Cap 11 (Observability).
 - [PRD](../prd/PRD.md), [FSD](../fsd/FSD.md), [ADR 0001](0001-estilo-arquitectonico.md).
-- [Brief Anexo A](../../examen.md) §A.4.
+- [Brief FTGO](../brief/brief.md) §A.4.
