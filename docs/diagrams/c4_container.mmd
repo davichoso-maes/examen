@@ -1,0 +1,73 @@
+C4Container
+    title FTGO – Diagrama de contenedores (nivel 2)
+
+    Person(consumer, "Consumidor", "Usuario final")
+    Person(restaurant, "Restaurante", "Operador de cocina")
+    Person(courier, "Courier", "Repartidor")
+    Person(backoffice, "Empleado Back Office", "Soporte y finanzas")
+
+    System_Ext(stripe, "Stripe", "Pasarela de pago externa")
+    System_Ext(maps, "Google Maps", "Geocoding y rutas")
+    System_Ext(sendgrid, "SendGrid / Twilio", "Email, SMS, push")
+    System_Ext(legacy, "Monolito Legacy", "Java/WAR existente (Strangler Fig)")
+
+    System_Boundary(ftgo, "FTGO Platform") {
+
+        Container(mobile_app, "Mobile App", "React Native (iOS/Android)", "App del consumidor y del courier")
+        Container(web_admin, "Web Admin", "React", "Dashboard del restaurante y back office")
+
+        Container(api_gateway, "API Gateway", "Spring Cloud Gateway", "Enrutado, auth, rate-limit, routing legacy↔nuevo (Strangler Fig)")
+
+        Container(consumer_svc, "Consumer Service", "Java 17 / Spring Boot", "Perfiles, direcciones, GDPR")
+        Container(restaurant_svc, "Restaurant Service", "Java 17 / Spring Boot", "Menú, horarios, disponibilidad")
+        Container(order_svc, "Order Service", "Java 17 / Spring Boot", "Order Taking + Saga origin")
+        Container(kitchen_svc, "Kitchen Service", "Java 17 / Spring Boot", "Tickets y estado de preparación")
+        Container(delivery_svc, "Delivery Service", "Java 17 / Spring Boot", "Asignación de courier + tracking")
+        Container(billing_svc, "Billing Service", "Java 17 / Spring Boot", "Cobros, comisiones, payouts (outbox)")
+        Container(notification_svc, "Notification Service", "Node.js 20", "Adaptador a SendGrid/Twilio (servicio satélite)")
+
+        ContainerDb(consumer_db, "Consumer DB", "PostgreSQL 15", "Perfiles y direcciones")
+        ContainerDb(restaurant_db, "Restaurant DB", "PostgreSQL 15", "Restaurantes y menús")
+        ContainerDb(order_db, "Order DB", "PostgreSQL 15", "Aggregate Order + outbox events")
+        ContainerDb(kitchen_db, "Kitchen DB", "PostgreSQL 15", "Tickets + estados de preparación")
+        ContainerDb(delivery_db, "Delivery DB", "PostgreSQL 15 + PostGIS", "Couriers, posiciones, asignaciones")
+        ContainerDb(billing_db, "Billing DB", "PostgreSQL 15", "Cobros, intentos, payouts + outbox")
+
+        ContainerQueue(kafka, "Event Broker", "Apache Kafka 3.7", "Bus de eventos de dominio + Sagas coreográficas")
+
+    }
+
+    Rel(consumer, mobile_app, "Usa para pedir y rastrear", "iOS/Android")
+    Rel(courier, mobile_app, "Usa para aceptar entregas", "Android")
+    Rel(restaurant, web_admin, "Gestiona tickets y menú", "Web/HTTPS")
+    Rel(backoffice, web_admin, "Soporte y reportes", "Web/HTTPS")
+
+    Rel(mobile_app, api_gateway, "Pedidos, perfiles, tracking", "JSON/HTTPS, REST")
+    Rel(web_admin, api_gateway, "Dashboards", "JSON/HTTPS, REST")
+
+    Rel(api_gateway, consumer_svc, "Lecturas/escrituras de perfil", "JSON/HTTPS, REST")
+    Rel(api_gateway, restaurant_svc, "Menús y disponibilidad", "JSON/HTTPS, REST")
+    Rel(api_gateway, order_svc, "Crear/leer pedidos", "JSON/HTTPS, REST")
+    Rel(api_gateway, kitchen_svc, "Aceptar/rechazar tickets", "JSON/HTTPS, REST")
+    Rel(api_gateway, delivery_svc, "Tracking y asignaciones", "JSON/HTTPS + WebSocket")
+    Rel(api_gateway, legacy, "Rutas aún no migradas (Strangler Fig)", "JSON/HTTPS, REST")
+
+    Rel(consumer_svc, consumer_db, "Lee/Escribe", "JDBC")
+    Rel(restaurant_svc, restaurant_db, "Lee/Escribe", "JDBC")
+    Rel(order_svc, order_db, "Lee/Escribe", "JDBC")
+    Rel(kitchen_svc, kitchen_db, "Lee/Escribe", "JDBC")
+    Rel(delivery_svc, delivery_db, "Lee/Escribe (PostGIS)", "JDBC")
+    Rel(billing_svc, billing_db, "Lee/Escribe", "JDBC")
+
+    Rel(order_svc, kafka, "Publica OrderCreated, OrderCancelled", "Kafka protocol (async)")
+    Rel(billing_svc, kafka, "Consume OrderCreated; Publica PaymentAuthorized, PaymentFailed", "Kafka protocol (async)")
+    Rel(kitchen_svc, kafka, "Consume PaymentAuthorized; Publica OrderAccepted, OrderRejected", "Kafka protocol (async)")
+    Rel(delivery_svc, kafka, "Consume OrderAccepted; Publica CourierAssigned, OrderDelivered", "Kafka protocol (async)")
+    Rel(notification_svc, kafka, "Consume eventos de dominio", "Kafka protocol (async)")
+    Rel(legacy, kafka, "Coexistencia: publica y consume eventos durante migración", "Kafka protocol (async)")
+
+    Rel(billing_svc, stripe, "Autoriza y captura cobros (outbox + retry)", "JSON/HTTPS")
+    Rel(delivery_svc, maps, "Geocoding y cálculo de rutas", "JSON/HTTPS")
+    Rel(notification_svc, sendgrid, "Envía emails, SMS, push", "JSON/HTTPS")
+
+    UpdateLayoutConfig($c4ShapeInRow="4", $c4BoundaryInRow="1")
