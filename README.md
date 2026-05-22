@@ -1,2 +1,101 @@
-# examen
-# examen
+# Examen Práctico — Caso FTGO (Food To Go)
+
+**Maestrante**: David
+**Modalidad**: Individual
+**Branch de entrega**: `release/exam-lab`
+**Fecha de entrega**: 21–22 mayo 2026
+**Caso**: FTGO (Richardson, *Microservices Patterns*, Manning 2019)
+
+---
+
+## 1. Propósito
+
+Este repositorio documenta la **arquitectura objetivo** del marketplace de delivery FTGO en su migración del monolito Java/WAR hacia microservicios (Strangler Fig, 18–24 meses). Contiene:
+
+- **BRD / MRD / PRD / FSD**: trazabilidad de negocio → mercado → producto → función.
+- **ADRs**: decisiones arquitectónicas con opciones, trade-offs y consecuencias.
+- **Diagramas C4**: Context (nivel 1) y Container (nivel 2) en Mermaid.
+- **Prompts mejorados**: 2 de los 4 prompts semilla del Anexo B con cambios documentados, métricas y comandos invocables.
+
+## 2. Estructura del repositorio
+
+```
+.
+├── README.md                          # Este archivo
+├── examen.md                          # Consigna y anexos (A y B)
+├── docs/
+│   ├── brd/BRD.md                     # Business Requirements Document
+│   ├── mrd/MRD.md                     # Market Requirements Document
+│   ├── prd/PRD.md                     # Product Requirements Document
+│   ├── fsd/FSD.md                     # Functional Specification (≥ 5 UCs con GWT)
+│   ├── adr/
+│   │   ├── 0001-estilo-arquitectonico.md
+│   │   └── 0002-mecanismo-ipc.md
+│   ├── diagrams/
+│   │   ├── c4_context.mmd             # C4 nivel 1
+│   │   └── c4_container.mmd           # C4 nivel 2
+│   └── skills/                        # Skills auxiliares para reproducir el trabajo
+└── prompts_mejorados/
+    ├── prd_mejorado.md                # Mejora del B.1
+    └── adr_mejorado.md                # Mejora del B.3
+```
+
+## 3. Mapa de trazabilidad
+
+```
+Brief FTGO (Anexo A)
+        │
+        ▼
+   BRD → MRD → PRD ──► NFRs
+                  │
+                  ├──► FSD (≥ 5 UCs con Given/When/Then)
+                  │
+                  └──► ADR 0001 (estilo) ──► ADR 0002 (IPC)
+                                                │
+                                                ▼
+                                       C4 Context (L1)
+                                       C4 Container (L2)
+```
+
+Cada NFR del PRD cita `[Brief §A.4]`. Cada UC del FSD cita su origen (US-NN o capacidad PRD o capítulo Richardson). Cada decisión ADR cita restricciones del brief y capítulos del libro.
+
+## 4. Comandos invocables (prompts mejorados)
+
+Los prompts pueden ejecutarse referenciando el archivo desde un cliente compatible con Claude / Cursor / Continue:
+
+```text
+# Generar el PRD desde el brief
+@prompts_mejorados/prd_mejorado.md genera PRD para FTGO
+
+# Generar un ADR (parámetro = decisión a tomar)
+@prompts_mejorados/adr_mejorado.md decision="estilo arquitectónico"
+```
+
+Detalle completo y métricas antes/después con 3 corridas en cada archivo de `prompts_mejorados/`.
+
+## 5. Métricas declaradas (resumen)
+
+| Prompt | Indicador medido | Antes (semilla) | Después (mejorado) |
+|---|---|---|---|
+| `prd_mejorado.md` | % secciones cubiertas en primera corrida | 60 % (3/5) | 100 % (5/5) |
+| `adr_mejorado.md` | # opciones reales evaluadas + ambas consecuencias | 1.7 promedio / no | 3.0 promedio / sí |
+
+Evidencia por corrida en cada archivo de `prompts_mejorados/<nombre>.md` § Métrica.
+
+## 6. Cómo reproducir
+
+1. Leer `examen.md` (Anexos A y B son la única fuente del dominio).
+2. Leer artefactos en orden: BRD → MRD → PRD → FSD → ADRs → diagramas C4.
+3. Para regenerar un artefacto: invocar el prompt correspondiente de `prompts_mejorados/` con los inputs declarados en su sección **Context**.
+4. Render de diagramas: cualquier visor Mermaid con soporte C4 (Mermaid ≥ 10.0).
+
+## 7. Self-check de entrega
+
+- [x] Branch `release/exam-lab` creada.
+- [x] Estructura de carpetas conforme al árbol pedido.
+- [x] PRD con 5 secciones obligatorias y NFRs trazables.
+- [x] FSD con ≥ 5 UCs y bloques Given/When/Then.
+- [x] 2 ADRs con ≥ 3 opciones, trade-offs y consecuencias positivas y negativas.
+- [x] 2 diagramas C4 válidos en Mermaid con tecnología/protocolo en cada relación.
+- [x] 2 prompts mejorados con changelog, métrica de 3 corridas y comando invocable.
+- [x] README ejecutable.
