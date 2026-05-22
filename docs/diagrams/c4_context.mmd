@@ -1,0 +1,26 @@
+C4Context
+    title FTGO – Diagrama de contexto (nivel 1)
+
+    Person(consumer, "Consumidor", "Usuario final que ordena comida desde la app móvil o web (Brief §A.2)")
+    Person(restaurant, "Restaurante", "Negocio asociado que recibe tickets y gestiona la preparación (Brief §A.2)")
+    Person(courier, "Courier", "Repartidor independiente que acepta entregas y completa la ruta (Brief §A.2)")
+    Person(backoffice, "Empleado FTGO – Back Office", "Soporte, finanzas y operaciones (Brief §A.2)")
+
+    System(ftgo, "FTGO Platform", "Marketplace de delivery: toma pedidos, los enruta a restaurantes y asigna couriers")
+
+    System_Ext(stripe, "Stripe", "Pasarela de pago — autoriza y captura cobros (PCI-DSS delegado, Brief §A.4)")
+    System_Ext(maps, "Google Maps", "Geocoding y cálculo de rutas para la asignación y tracking del courier")
+    System_Ext(sendgrid, "SendGrid / Twilio", "Notificaciones email y SMS / push transaccionales")
+    System_Ext(legacy, "Monolito FTGO Legacy", "Aplicación Java/WAR existente — coexiste durante la migración Strangler Fig (18–24 meses, Brief §A.4)")
+
+    Rel(consumer, ftgo, "Busca, ordena y rastrea pedidos", "iOS/Android, JSON/HTTPS")
+    Rel(restaurant, ftgo, "Gestiona tickets y disponibilidad del menú", "Web dashboard, JSON/HTTPS")
+    Rel(courier, ftgo, "Acepta entregas y publica ubicación", "Android, JSON/HTTPS + WebSocket")
+    Rel(backoffice, ftgo, "Resuelve incidencias y revisa reportes", "Web admin, JSON/HTTPS")
+
+    Rel(ftgo, stripe, "Autoriza y captura cobros del consumidor", "JSON/HTTPS")
+    Rel(ftgo, maps, "Geocoding y rutas optimizadas", "JSON/HTTPS")
+    Rel(ftgo, sendgrid, "Envía emails, SMS y push", "JSON/HTTPS (SMTP relay para SendGrid)")
+    Rel(ftgo, legacy, "Sincroniza datos durante migración Strangler Fig", "Eventos Kafka + REST/HTTPS")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
