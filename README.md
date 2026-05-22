@@ -1,10 +1,6 @@
 # Examen Práctico — Caso FTGO (Food To Go)
 
-**Maestrante**: David
-**Modalidad**: Individual
-**Branch de entrega**: `release/exam-lab`
-**Fecha de entrega**: 21–22 mayo 2026
-**Caso**: FTGO (Richardson, *Microservices Patterns*, Manning 2019)
+**Maestrante**: Antonio David Ovando Arcienega
 
 ---
 
